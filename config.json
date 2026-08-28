@@ -1,0 +1,50 @@
+{
+  "site": {
+    "title": "极净海外双 ISP 住宅出口",
+    "subtitle": "跨境防封与自动化矩阵算力",
+    "desc": "专为 TikTok 闭环出海、跨境多店铺矩阵及 AI Agent 打造。国内直连中转，彻底杜绝 0 播放惩罚与账号关联封禁。",
+    "badge": "长三角 / 珠三角专线中转接入中",
+    "qrImage": "https://dummyimage.com/200x200/000/fff&text=WeChat+QR"
+  },
+  "plans": [
+    {
+      "name": "美区 / 英区 双 ISP",
+      "tag": "原生静态住宅",
+      "price": "180",
+      "unit": "/ 月 / 个",
+      "isPopular": false,
+      "features": [
+        "纯净住宅属性（AT&T / Comcast 等）",
+        "国内中转加速（广港/沪日低延迟）",
+        "标准 SOCKS5/HTTP 免插件直连",
+        "完美适配 AdsPower / 比特浏览器"
+      ]
+    },
+    {
+      "name": "云真机 + 独享住宅 IP",
+      "tag": "物理级 ARM 矩阵",
+      "price": "268",
+      "unit": "/ 月 / 台",
+      "isPopular": true,
+      "features": [
+        "原生 ARM 架构硬件（非 x86 模拟器）",
+        "绑定独立双 ISP 原生住宅 IP",
+        "网页端 WebRTC 极速串流与多屏群控",
+        "彻底免去实体旧手机采购与折旧"
+      ]
+    },
+    {
+      "name": "OpenClaw 代部署 + API",
+      "tag": "出海 AI 提效",
+      "price": "580",
+      "unit": "/ 次 (一次性)",
+      "isPopular": false,
+      "features": [
+        "本地 Mac/PC/虚拟机全套环境代部署",
+        "跨境选品、舆情与客服自动化流水线",
+        "赠送高可用海外专线 API 体验额度",
+        "1对1 远程技术调试与配置交付"
+      ]
+    }
+  ]
+}
