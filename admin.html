@@ -3,148 +3,170 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ISP Cloud | 模块化后台配置中心</title>
+  <title>AxiomIP | 矩阵后台管理系统</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-950 text-gray-100 min-h-screen p-6 font-sans">
-  <div class="max-w-4xl mx-auto">
-    <!-- Header -->
+<body class="bg-gray-950 text-gray-100 min-h-screen font-sans">
+
+  <!-- 🔒 密码登录锁屏界面 (初始密码: password) -->
+  <div id="loginLock" class="fixed inset-0 bg-gray-950 flex items-center justify-center p-4 z-50">
+    <div class="bg-gray-900 border border-gray-800 w-full max-w-sm rounded-2xl p-8 shadow-2xl">
+      <div class="text-center mb-6">
+        <div class="inline-flex p-3 rounded-2xl bg-orange-500/10 text-orange-500 text-2xl mb-3">🔐</div>
+        <h2 class="text-xl font-bold text-white">管理控制台鉴权</h2>
+        <p class="text-xs text-gray-400 mt-1">请输入后台管理密码进入配置中心</p>
+      </div>
+      <div class="space-y-4">
+        <input id="pwdInput" type="password" placeholder="初始默认密码: password" class="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-orange-500 text-center font-mono">
+        <button onclick="verifyLogin()" class="w-full py-3 bg-orange-600 hover:bg-orange-500 rounded-xl font-bold text-sm text-white transition">
+          解锁并进入后台
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主后台操作界面 -->
+  <div id="mainAdmin" class="hidden max-w-6xl mx-auto p-6">
+    <!-- 头部 -->
     <div class="flex items-center justify-between border-b border-gray-800 pb-4 mb-6">
       <div>
-        <h1 class="text-2xl font-bold text-white flex items-center gap-2">⚡ 业务官网可视化后台</h1>
-        <p class="text-xs text-gray-400 mt-1">修改后点击发布，全网 10 秒内自动同步生效</p>
+        <h1 class="text-2xl font-black text-white flex items-center gap-2">
+          ⚡ Axiom<span class="text-orange-500">IP</span> 业务参数中心
+        </h1>
+        <p class="text-xs text-gray-400 mt-1">支持 30 个 IP 节点价格批量管理与动态发布</p>
       </div>
-      <button onclick="saveConfig()" id="saveBtn" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold text-sm text-white transition flex items-center gap-2">
-        <span>🚀 保存并发布更新</span>
-      </button>
+      <div class="flex gap-3">
+        <button onclick="changeAdminPassword()" class="px-4 py-2 bg-gray-900 hover:bg-gray-800 border border-gray-700 rounded-xl text-xs font-bold text-gray-300">
+          🔑 修改登录密码
+        </button>
+        <button onclick="saveAndDeploy()" id="saveBtn" class="px-5 py-2.5 bg-orange-600 hover:bg-orange-500 rounded-xl font-bold text-sm text-white transition flex items-center gap-2 shadow-lg shadow-orange-600/30">
+          🚀 保存并全网发布
+        </button>
+      </div>
     </div>
 
-    <!-- GitHub 权限凭证设置 -->
-    <div class="bg-gray-900 border border-gray-800 rounded-xl p-5 mb-8">
-      <h2 class="text-sm font-bold text-indigo-400 uppercase tracking-wider mb-3">⚙️ GitHub 鉴权授权</h2>
+    <!-- GitHub 凭证 -->
+    <div class="bg-gray-900 border border-gray-800 rounded-xl p-5 mb-6">
+      <h2 class="text-xs font-bold text-orange-400 uppercase tracking-wider mb-3">⚙️ GitHub 自动同步凭证</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
           <label class="block text-xs text-gray-400 mb-1">GitHub 用户名</label>
-          <input id="ghUser" type="text" value="sonytxl" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-indigo-500">
+          <input id="ghUser" type="text" value="sonytxl" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2 text-xs text-white">
         </div>
         <div>
-          <label class="block text-xs text-gray-400 mb-1">仓库名称</label>
-          <input id="ghRepo" type="text" value="global-proxy-web" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-indigo-500">
+          <label class="block text-xs text-gray-400 mb-1">仓库名</label>
+          <input id="ghRepo" type="text" value="global-proxy-web" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2 text-xs text-white">
         </div>
         <div>
-          <label class="block text-xs text-gray-400 mb-1">GitHub Token (需 repo 权限)</label>
-          <input id="ghToken" type="password" placeholder="ghp_xxxxxxxxxxxx" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-indigo-500">
+          <label class="block text-xs text-gray-400 mb-1">GitHub Token</label>
+          <input id="ghToken" type="password" placeholder="ghp_xxx" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2 text-xs text-white font-mono">
         </div>
       </div>
-      <p class="text-[11px] text-gray-500 mt-2">Token 仅保存在你的浏览器本地，用于直接向你的 GitHub 仓库推送最新配置。</p>
     </div>
 
-    <!-- 模块 1：头部 Hero 文案与图片 -->
+    <!-- 30 个 IP 节点配置矩阵 -->
     <div class="bg-gray-900 border border-gray-800 rounded-xl p-5 mb-8">
-      <h2 class="text-sm font-bold text-indigo-400 uppercase tracking-wider mb-4">📝 首页焦点区文案</h2>
-      <div class="grid grid-cols-1 gap-4">
-        <div>
-          <label class="block text-xs text-gray-400 mb-1">主标题 (第一行)</label>
-          <input id="siteTitle" type="text" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-sm text-white">
-        </div>
-        <div>
-          <label class="block text-xs text-gray-400 mb-1">高亮彩色副标题 (第二行)</label>
-          <input id="siteSubtitle" type="text" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-sm text-white">
-        </div>
-        <div>
-          <label class="block text-xs text-gray-400 mb-1">顶部徽章文字</label>
-          <input id="siteBadge" type="text" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-sm text-white">
-        </div>
-        <div>
-          <label class="block text-xs text-gray-400 mb-1">描述段落</label>
-          <textarea id="siteDesc" rows="2" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-sm text-white"></textarea>
-        </div>
-        <div>
-          <label class="block text-xs text-gray-400 mb-1">微信/支付宝收款二维码图片直链 URL</label>
-          <input id="siteQr" type="text" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-sm text-white font-mono">
-        </div>
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xs font-bold text-orange-400 uppercase tracking-wider">📦 30 个全球节点参数表 (5列 × 6排)</h2>
+        <span class="text-xs text-gray-500 font-mono">Total: 30 Locations</span>
       </div>
-    </div>
-
-    <!-- 模块 2：3 个套餐价格卡片动态配置 -->
-    <div class="mb-8">
-      <h2 class="text-sm font-bold text-indigo-400 uppercase tracking-wider mb-4">💰 业务套餐模块</h2>
-      <div id="plansContainer" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+      
+      <div id="adminIpGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[600px] overflow-y-auto p-1">
+        <!-- 渲染 30 个编辑卡片 -->
+      </div>
     </div>
   </div>
 
   <script>
-    let currentConfig = null;
-    let fileSha = '';
+    let siteConfig = null;
 
-    // 初始化加载
     window.onload = async () => {
       document.getElementById('ghToken').value = localStorage.getItem('gh_token') || '';
       try {
         const res = await fetch('./config.json?' + Date.now());
-        currentConfig = await res.json();
-        renderForm();
+        siteConfig = await res.json();
       } catch (e) {
-        alert('未检测到 config.json，请确保已在仓库创建！');
+        alert('无法拉取 config.json，请检查仓库文件！');
       }
     };
 
-    function renderForm() {
-      document.getElementById('siteTitle').value = currentConfig.site.title;
-      document.getElementById('siteSubtitle').value = currentConfig.site.subtitle;
-      document.getElementById('siteBadge').value = currentConfig.site.badge;
-      document.getElementById('siteDesc').value = currentConfig.site.desc;
-      document.getElementById('siteQr').value = currentConfig.site.qrImage;
+    function verifyLogin() {
+      const pwd = document.getElementById('pwdInput').value.trim();
+      const truePwd = (siteConfig && siteConfig.adminPassword) ? siteConfig.adminPassword : 'password';
 
-      const container = document.getElementById('plansContainer');
+      if (pwd === truePwd) {
+        document.getElementById('loginLock').classList.add('hidden');
+        document.getElementById('mainAdmin').classList.remove('hidden');
+        renderAdminIpGrid();
+      } else {
+        alert('密码错误！默认密码为: password');
+      }
+    }
+
+    function changeAdminPassword() {
+      const newPwd = prompt('请输入新的后台登录密码:', '');
+      if (newPwd && newPwd.trim().length >= 4) {
+        siteConfig.adminPassword = newPwd.trim();
+        alert('密码已在内存中修改！请点击右上角【🚀 保存并全网发布】以永久保存至 GitHub。');
+      } else if (newPwd !== null) {
+        alert('密码长度至少为 4 位！');
+      }
+    }
+
+    function renderAdminIpGrid() {
+      const container = document.getElementById('adminIpGrid');
       container.innerHTML = '';
 
-      currentConfig.plans.forEach((p, idx) => {
+      siteConfig.ipNodes.forEach((node, idx) => {
         const card = document.createElement('div');
-        card.className = "bg-gray-900 border border-gray-800 rounded-xl p-4 flex flex-col justify-between";
+        card.className = "bg-gray-950 border border-gray-800 rounded-xl p-3.5 space-y-2";
         card.innerHTML = `
-          <div>
-            <div class="text-xs font-bold text-indigo-400 mb-2">套餐 ${idx + 1}</div>
-            <label class="block text-[11px] text-gray-400 mb-1">标签分类</label>
-            <input id="p_tag_${idx}" type="text" value="${p.tag}" class="w-full bg-gray-950 border border-gray-800 rounded p-1.5 text-xs text-white mb-2">
-            
-            <label class="block text-[11px] text-gray-400 mb-1">套餐名称</label>
-            <input id="p_name_${idx}" type="text" value="${p.name}" class="w-full bg-gray-950 border border-gray-800 rounded p-1.5 text-xs text-white mb-2 font-bold">
-            
-            <label class="block text-[11px] text-gray-400 mb-1">展示价格 (元)</label>
-            <input id="p_price_${idx}" type="text" value="${p.price}" class="w-full bg-gray-950 border border-gray-800 rounded p-1.5 text-xs text-white mb-2 font-mono">
-
-            <label class="block text-[11px] text-gray-400 mb-1">特性列表 (每行一条)</label>
-            <textarea id="p_feat_${idx}" rows="4" class="w-full bg-gray-950 border border-gray-800 rounded p-1.5 text-xs text-white font-mono">${p.features.join('\n')}</textarea>
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-xs text-white">${node.id}. ${node.flag} ${node.name_zh} (${node.name_en})</span>
+            <span class="text-[10px] font-mono uppercase text-gray-500">${node.continent}</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[10px] text-gray-500">地区名 (中)</label>
+              <input id="node_region_zh_${idx}" type="text" value="${node.region_zh}" class="w-full bg-gray-900 border border-gray-800 rounded p-1 text-xs text-white">
+            </div>
+            <div>
+              <label class="block text-[10px] text-gray-500">Region (EN)</label>
+              <input id="node_region_en_${idx}" type="text" value="${node.region_en}" class="w-full bg-gray-900 border border-gray-800 rounded p-1 text-xs text-white">
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[10px] text-gray-500">人民币价格 (元/月)</label>
+              <input id="node_price_cny_${idx}" type="number" value="${node.price_cny}" class="w-full bg-gray-900 border border-gray-800 rounded p-1 text-xs text-orange-400 font-mono">
+            </div>
+            <div>
+              <label class="block text-[10px] text-gray-500">美元价格 ($/mo)</label>
+              <input id="node_price_usd_${idx}" type="number" value="${node.price_usd}" class="w-full bg-gray-900 border border-gray-800 rounded p-1 text-xs text-orange-400 font-mono">
+            </div>
           </div>
         `;
         container.appendChild(card);
       });
     }
 
-    async function saveConfig() {
+    async function saveAndDeploy() {
       const token = document.getElementById('ghToken').value.trim();
       const user = document.getElementById('ghUser').value.trim();
       const repo = document.getElementById('ghRepo').value.trim();
 
       if (!token) {
-        alert('请在上方输入 GitHub Token（需要具备 repo 写入权限）！');
+        alert('请在上方输入 GitHub Token！');
         return;
       }
       localStorage.setItem('gh_token', token);
 
-      // 组装新配置
-      currentConfig.site.title = document.getElementById('siteTitle').value;
-      currentConfig.site.subtitle = document.getElementById('siteSubtitle').value;
-      currentConfig.site.badge = document.getElementById('siteBadge').value;
-      currentConfig.site.desc = document.getElementById('siteDesc').value;
-      currentConfig.site.qrImage = document.getElementById('siteQr').value;
-
-      currentConfig.plans.forEach((p, idx) => {
-        p.tag = document.getElementById(`p_tag_${idx}`).value;
-        p.name = document.getElementById(`p_name_${idx}`).value;
-        p.price = document.getElementById(`p_price_${idx}`).value;
-        p.features = document.getElementById(`p_feat_${idx}`).value.split('\n').filter(s => s.trim() !== '');
+      // 读取 30 个节点的最新输入值
+      siteConfig.ipNodes.forEach((node, idx) => {
+        node.region_zh = document.getElementById(`node_region_zh_${idx}`).value;
+        node.region_en = document.getElementById(`node_region_en_${idx}`).value;
+        node.price_cny = parseFloat(document.getElementById(`node_price_cny_${idx}`).value) || 0;
+        node.price_usd = parseFloat(document.getElementById(`node_price_usd_${idx}`).value) || 0;
       });
 
       const btn = document.getElementById('saveBtn');
@@ -152,13 +174,11 @@
       btn.disabled = true;
 
       try {
-        // 获取 config.json 当前 SHA
         const getRes = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/config.json`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const fileData = await getRes.json();
-        
-        // 推送更新
+
         const updateRes = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/config.json`, {
           method: 'PUT',
           headers: {
@@ -166,21 +186,21 @@
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            message: 'chore: update site config via admin panel',
-            content: btoa(unescape(encodeURIComponent(JSON.stringify(currentConfig, null, 2)))),
+            message: 'chore: update 30 IP nodes pricing and admin config',
+            content: btoa(unescape(encodeURIComponent(JSON.stringify(siteConfig, null, 2)))),
             sha: fileData.sha
           })
         });
 
         if (updateRes.ok) {
-          alert('🎉 保存成功！Vercel 正在自动构建，10 秒后刷新前台即可看到新内容！');
+          alert('🎉 保存并发布成功！10 秒后刷新前台即可看到最新的 IP 价格与矩阵数据！');
         } else {
-          alert('保存失败，请检查 Token 权限是否有效。');
+          alert('保存失败，请检查 GitHub Token 权限！');
         }
-      } catch (err) {
-        alert('请求出错: ' + err.message);
+      } catch (e) {
+        alert('请求出错: ' + e.message);
       } finally {
-        btn.innerText = '🚀 保存并发布更新';
+        btn.innerText = '🚀 保存并全网发布';
         btn.disabled = false;
       }
     }
