@@ -1,49 +1,83 @@
 {
   "site": {
-    "title": "极净海外双 ISP 住宅出口",
-    "subtitle": "跨境防封与自动化矩阵算力",
-    "desc": "专为 TikTok 闭环出海、跨境多店铺矩阵及 AI Agent 打造。国内直连中转，彻底杜绝 0 播放惩罚与账号关联封禁。",
-    "badge": "长三角 / 珠三角专线中转接入中",
-    "qrImage": "https://dummyimage.com/200x200/000/fff&text=WeChat+QR"
+    "badge_zh": "长三角 / 珠三角专线中转接入中",
+    "badge_en": "Global Ultra-Low Latency Dedicated Transit Active",
+    "title_zh": "极净海外双 ISP 住宅出口",
+    "title_en": "Ultra-Clean Dual ISP Residential Proxies",
+    "subtitle_zh": "跨境防封与自动化矩阵算力",
+    "subtitle_en": "Anti-Ban Infrastructure for E-Commerce & AI Agents",
+    "desc_zh": "专为 TikTok 闭环出海、跨境多店铺矩阵及 AI Agent 打造。国内直连中转，彻底杜绝 0 播放惩罚与账号关联封禁。",
+    "desc_en": "Engineered for cross-border multi-accounting, TikTok live-streaming, and autonomous AI scrapers. 100% genuine residential IP pool.",
+    "qrImage": "https://dummyimage.com/200x200/000/fff&text=Support+QR"
   },
   "plans": [
     {
-      "name": "美区 / 英区 双 ISP",
-      "tag": "原生静态住宅",
-      "price": "180",
-      "unit": "/ 月 / 个",
+      "tag_zh": "原生静态住宅",
+      "tag_en": "Static Residential",
+      "name_zh": "美区 / 英区 双 ISP",
+      "name_en": "US / UK Dual ISP Node",
+      "price_cny": "180",
+      "price_usd": "25",
+      "unit_zh": "/ 月 / 个",
+      "unit_en": "/ mo / IP",
       "isPopular": false,
-      "features": [
+      "features_zh": [
         "纯净住宅属性（AT&T / Comcast 等）",
         "国内中转加速（广港/沪日低延迟）",
         "标准 SOCKS5/HTTP 免插件直连",
         "完美适配 AdsPower / 比特浏览器"
+      ],
+      "features_en": [
+        "100% Pure Tier-1 ISP (AT&T, Comcast)",
+        "Direct Low-Latency Transit BGP Routing",
+        "Standard SOCKS5 / HTTP(S) Protocols",
+        "Zero-Detection on Anti-Detect Browsers"
       ]
     },
     {
-      "name": "云真机 + 独享住宅 IP",
-      "tag": "物理级 ARM 矩阵",
-      "price": "268",
-      "unit": "/ 月 / 台",
+      "tag_zh": "物理级 ARM 矩阵",
+      "tag_en": "Bare-Metal ARM Matrix",
+      "name_zh": "云真机 + 独享住宅 IP",
+      "name_en": "Cloud Phone + Dedicated ISP",
+      "price_cny": "268",
+      "price_usd": "38",
+      "unit_zh": "/ 月 / 台",
+      "unit_en": "/ mo / Device",
       "isPopular": true,
-      "features": [
+      "features_zh": [
         "原生 ARM 架构硬件（非 x86 模拟器）",
         "绑定独立双 ISP 原生住宅 IP",
         "网页端 WebRTC 极速串流与多屏群控",
         "彻底免去实体旧手机采购与折旧"
+      ],
+      "features_en": [
+        "Native ARM Hardware (Non-x86 Emulator)",
+        "Dedicated Dual-ISP Residential Binding",
+        "Ultra-Fast WebRTC Stream & Fleet Control",
+        "No Physical Hardware Maintenance"
       ]
     },
     {
-      "name": "OpenClaw 代部署 + API",
-      "tag": "出海 AI 提效",
-      "price": "580",
-      "unit": "/ 次 (一次性)",
+      "tag_zh": "出海 AI 提效",
+      "tag_en": "AI Scraper & Agent",
+      "name_zh": "OpenClaw 代部署 + API",
+      "name_en": "OpenClaw Setup + Proxy API",
+      "price_cny": "580",
+      "price_usd": "85",
+      "unit_zh": "/ 次 (一次性)",
+      "unit_en": "/ One-Time",
       "isPopular": false,
-      "features": [
+      "features_zh": [
         "本地 Mac/PC/虚拟机全套环境代部署",
         "跨境选品、舆情与客服自动化流水线",
         "赠送高可用海外专线 API 体验额度",
         "1对1 远程技术调试与配置交付"
+      ],
+      "features_en": [
+        "Turnkey Local/Cloud Scraper Deployment",
+        "Automated Market Intel & Social Workflows",
+        "Bundled High-Concurrency Proxy API Quota",
+        "1-on-1 Dedicated Technical Support"
       ]
     }
   ]
