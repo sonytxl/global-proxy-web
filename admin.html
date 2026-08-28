@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISP Cloud | 模块化后台配置中心</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-gray-100 min-h-screen p-6 font-sans">
+  <div class="max-w-4xl mx-auto">
+    <!-- Header -->
+    <div class="flex items-center justify-between border-b border-gray-800 pb-4 mb-6">
+      <div>
+        <h1 class="text-2xl font-bold text-white flex items-center gap-2">⚡ 业务官网可视化后台</h1>
+        <p class="text-xs text-gray-400 mt-1">修改后点击发布，全网 10 秒内自动同步生效</p>
+      </div>
+      <button onclick="saveConfig()" id="saveBtn" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold text-sm text-white transition flex items-center gap-2">
+        <span>🚀 保存并发布更新</span>
+      </button>
+    </div>
+
+    <!-- GitHub 权限凭证设置 -->
+    <div class="bg-gray-900 border border-gray-800 rounded-xl p-5 mb-8">
+      <h2 class="text-sm font-bold text-indigo-400 uppercase tracking-wider mb-3">⚙️ GitHub 鉴权授权</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label class="block text-xs text-gray-400 mb-1">GitHub 用户名</label>
+          <input id="ghUser" type="text" value="sonytxl" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-indigo-500">
+        </div>
+        <div>
+          <label class="block text-xs text-gray-400 mb-1">仓库名称</label>
+          <input id="ghRepo" type="text" value="global-proxy-web" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-indigo-500">
+        </div>
+        <div>
+          <label class="block text-xs text-gray-400 mb-1">GitHub Token (需 repo 权限)</label>
+          <input id="ghToken" type="password" placeholder="ghp_xxxxxxxxxxxx" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-sm text-white focus:outline-none focus:border-indigo-500">
+        </div>
+      </div>
+      <p class="text-[11px] text-gray-500 mt-2">Token 仅保存在你的浏览器本地，用于直接向你的 GitHub 仓库推送最新配置。</p>
+    </div>
+
+    <!-- 模块 1：头部 Hero 文案与图片 -->
+    <div class="bg-gray-900 border border-gray-800 rounded-xl p-5 mb-8">
+      <h2 class="text-sm font-bold text-indigo-400 uppercase tracking-wider mb-4">📝 首页焦点区文案</h2>
+      <div class="grid grid-cols-1 gap-4">
+        <div>
+          <label class="block text-xs text-gray-400 mb-1">主标题 (第一行)</label>
+          <input id="siteTitle" type="text" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-sm text-white">
+        </div>
+        <div>
+          <label class="block text-xs text-gray-400 mb-1">高亮彩色副标题 (第二行)</label>
+          <input id="siteSubtitle" type="text" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-sm text-white">
+        </div>
+        <div>
+          <label class="block text-xs text-gray-400 mb-1">顶部徽章文字</label>
+          <input id="siteBadge" type="text" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-sm text-white">
+        </div>
+        <div>
+          <label class="block text-xs text-gray-400 mb-1">描述段落</label>
+          <textarea id="siteDesc" rows="2" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-sm text-white"></textarea>
+        </div>
+        <div>
+          <label class="block text-xs text-gray-400 mb-1">微信/支付宝收款二维码图片直链 URL</label>
+          <input id="siteQr" type="text" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-2.5 text-sm text-white font-mono">
+        </div>
+      </div>
+    </div>
+
+    <!-- 模块 2：3 个套餐价格卡片动态配置 -->
+    <div class="mb-8">
+      <h2 class="text-sm font-bold text-indigo-400 uppercase tracking-wider mb-4">💰 业务套餐模块</h2>
+      <div id="plansContainer" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+    </div>
+  </div>
+
+  <script>
+    let currentConfig = null;
+    let fileSha = '';
+
+    // 初始化加载
+    window.onload = async () => {
+      document.getElementById('ghToken').value = localStorage.getItem('gh_token') || '';
+      try {
+        const res = await fetch('./config.json?' + Date.now());
+        currentConfig = await res.json();
+        renderForm();
+      } catch (e) {
+        alert('未检测到 config.json，请确保已在仓库创建！');
+      }
+    };
+
+    function renderForm() {
+      document.getElementById('siteTitle').value = currentConfig.site.title;
+      document.getElementById('siteSubtitle').value = currentConfig.site.subtitle;
+      document.getElementById('siteBadge').value = currentConfig.site.badge;
+      document.getElementById('siteDesc').value = currentConfig.site.desc;
+      document.getElementById('siteQr').value = currentConfig.site.qrImage;
+
+      const container = document.getElementById('plansContainer');
+      container.innerHTML = '';
+
+      currentConfig.plans.forEach((p, idx) => {
+        const card = document.createElement('div');
+        card.className = "bg-gray-900 border border-gray-800 rounded-xl p-4 flex flex-col justify-between";
+        card.innerHTML = `
+          <div>
+            <div class="text-xs font-bold text-indigo-400 mb-2">套餐 ${idx + 1}</div>
+            <label class="block text-[11px] text-gray-400 mb-1">标签分类</label>
+            <input id="p_tag_${idx}" type="text" value="${p.tag}" class="w-full bg-gray-950 border border-gray-800 rounded p-1.5 text-xs text-white mb-2">
+            
+            <label class="block text-[11px] text-gray-400 mb-1">套餐名称</label>
+            <input id="p_name_${idx}" type="text" value="${p.name}" class="w-full bg-gray-950 border border-gray-800 rounded p-1.5 text-xs text-white mb-2 font-bold">
+            
+            <label class="block text-[11px] text-gray-400 mb-1">展示价格 (元)</label>
+            <input id="p_price_${idx}" type="text" value="${p.price}" class="w-full bg-gray-950 border border-gray-800 rounded p-1.5 text-xs text-white mb-2 font-mono">
+
+            <label class="block text-[11px] text-gray-400 mb-1">特性列表 (每行一条)</label>
+            <textarea id="p_feat_${idx}" rows="4" class="w-full bg-gray-950 border border-gray-800 rounded p-1.5 text-xs text-white font-mono">${p.features.join('\n')}</textarea>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    async function saveConfig() {
+      const token = document.getElementById('ghToken').value.trim();
+      const user = document.getElementById('ghUser').value.trim();
+      const repo = document.getElementById('ghRepo').value.trim();
+
+      if (!token) {
+        alert('请在上方输入 GitHub Token（需要具备 repo 写入权限）！');
+        return;
+      }
+      localStorage.setItem('gh_token', token);
+
+      // 组装新配置
+      currentConfig.site.title = document.getElementById('siteTitle').value;
+      currentConfig.site.subtitle = document.getElementById('siteSubtitle').value;
+      currentConfig.site.badge = document.getElementById('siteBadge').value;
+      currentConfig.site.desc = document.getElementById('siteDesc').value;
+      currentConfig.site.qrImage = document.getElementById('siteQr').value;
+
+      currentConfig.plans.forEach((p, idx) => {
+        p.tag = document.getElementById(`p_tag_${idx}`).value;
+        p.name = document.getElementById(`p_name_${idx}`).value;
+        p.price = document.getElementById(`p_price_${idx}`).value;
+        p.features = document.getElementById(`p_feat_${idx}`).value.split('\n').filter(s => s.trim() !== '');
+      });
+
+      const btn = document.getElementById('saveBtn');
+      btn.innerText = '正在发布到 GitHub...';
+      btn.disabled = true;
+
+      try {
+        // 获取 config.json 当前 SHA
+        const getRes = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/config.json`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const fileData = await getRes.json();
+        
+        // 推送更新
+        const updateRes = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/config.json`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            message: 'chore: update site config via admin panel',
+            content: btoa(unescape(encodeURIComponent(JSON.stringify(currentConfig, null, 2)))),
+            sha: fileData.sha
+          })
+        });
+
+        if (updateRes.ok) {
+          alert('🎉 保存成功！Vercel 正在自动构建，10 秒后刷新前台即可看到新内容！');
+        } else {
+          alert('保存失败，请检查 Token 权限是否有效。');
+        }
+      } catch (err) {
+        alert('请求出错: ' + err.message);
+      } finally {
+        btn.innerText = '🚀 保存并发布更新';
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>
