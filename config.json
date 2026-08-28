@@ -1,4 +1,5 @@
 {
+  "adminPassword": "password",
   "site": {
     "badge_zh": "长三角 / 珠三角专线中转接入中",
     "badge_en": "Global Ultra-Low Latency Dedicated Transit Active",
@@ -10,75 +11,36 @@
     "desc_en": "Engineered for cross-border multi-accounting, TikTok live-streaming, and autonomous AI scrapers. 100% genuine residential IP pool.",
     "qrImage": "https://dummyimage.com/200x200/000/fff&text=Support+QR"
   },
-  "plans": [
-    {
-      "tag_zh": "原生静态住宅",
-      "tag_en": "Static Residential",
-      "name_zh": "美区 / 英区 双 ISP",
-      "name_en": "US / UK Dual ISP Node",
-      "price_cny": "180",
-      "price_usd": "25",
-      "unit_zh": "/ 月 / 个",
-      "unit_en": "/ mo / IP",
-      "isPopular": false,
-      "features_zh": [
-        "纯净住宅属性（AT&T / Comcast 等）",
-        "国内中转加速（广港/沪日低延迟）",
-        "标准 SOCKS5/HTTP 免插件直连",
-        "完美适配 AdsPower / 比特浏览器"
-      ],
-      "features_en": [
-        "100% Pure Tier-1 ISP (AT&T, Comcast)",
-        "Direct Low-Latency Transit BGP Routing",
-        "Standard SOCKS5 / HTTP(S) Protocols",
-        "Zero-Detection on Anti-Detect Browsers"
-      ]
-    },
-    {
-      "tag_zh": "物理级 ARM 矩阵",
-      "tag_en": "Bare-Metal ARM Matrix",
-      "name_zh": "云真机 + 独享住宅 IP",
-      "name_en": "Cloud Phone + Dedicated ISP",
-      "price_cny": "268",
-      "price_usd": "38",
-      "unit_zh": "/ 月 / 台",
-      "unit_en": "/ mo / Device",
-      "isPopular": true,
-      "features_zh": [
-        "原生 ARM 架构硬件（非 x86 模拟器）",
-        "绑定独立双 ISP 原生住宅 IP",
-        "网页端 WebRTC 极速串流与多屏群控",
-        "彻底免去实体旧手机采购与折旧"
-      ],
-      "features_en": [
-        "Native ARM Hardware (Non-x86 Emulator)",
-        "Dedicated Dual-ISP Residential Binding",
-        "Ultra-Fast WebRTC Stream & Fleet Control",
-        "No Physical Hardware Maintenance"
-      ]
-    },
-    {
-      "tag_zh": "出海 AI 提效",
-      "tag_en": "AI Scraper & Agent",
-      "name_zh": "OpenClaw 代部署 + API",
-      "name_en": "OpenClaw Setup + Proxy API",
-      "price_cny": "580",
-      "price_usd": "85",
-      "unit_zh": "/ 次 (一次性)",
-      "unit_en": "/ One-Time",
-      "isPopular": false,
-      "features_zh": [
-        "本地 Mac/PC/虚拟机全套环境代部署",
-        "跨境选品、舆情与客服自动化流水线",
-        "赠送高可用海外专线 API 体验额度",
-        "1对1 远程技术调试与配置交付"
-      ],
-      "features_en": [
-        "Turnkey Local/Cloud Scraper Deployment",
-        "Automated Market Intel & Social Workflows",
-        "Bundled High-Concurrency Proxy API Quota",
-        "1-on-1 Dedicated Technical Support"
-      ]
-    }
+  "ipNodes": [
+    { "id": 1, "flag": "🇺🇸", "name_zh": "美国", "name_en": "United States", "region_zh": "加利福尼亚州", "region_en": "California", "continent": "america", "price_cny": 42, "price_usd": 6 },
+    { "id": 2, "flag": "🇺🇸", "name_zh": "美国", "name_en": "United States", "region_zh": "弗吉尼亚州", "region_en": "Virginia", "continent": "america", "price_cny": 42, "price_usd": 6 },
+    { "id": 3, "flag": "🇺🇸", "name_zh": "美国", "name_en": "United States", "region_zh": "德克萨斯州", "region_en": "Texas", "continent": "america", "price_cny": 42, "price_usd": 6 },
+    { "id": 4, "flag": "🇺🇸", "name_zh": "美国", "name_en": "United States", "region_zh": "纽约州", "region_en": "New York", "continent": "america", "price_cny": 42, "price_usd": 6 },
+    { "id": 5, "flag": "🇬🇧", "name_zh": "英国", "name_en": "United Kingdom", "region_zh": "伦敦", "region_en": "London", "continent": "europe", "price_cny": 42, "price_usd": 6 },
+    { "id": 6, "flag": "🇩🇪", "name_zh": "德国", "name_en": "Germany", "region_zh": "法兰克福", "region_en": "Frankfurt", "continent": "europe", "price_cny": 42, "price_usd": 6 },
+    { "id": 7, "flag": "🇸🇬", "name_zh": "新加坡", "name_en": "Singapore", "region_zh": "中央区", "region_en": "Central", "continent": "asia", "price_cny": 63, "price_usd": 9 },
+    { "id": 8, "flag": "🇹🇼", "name_zh": "中国台湾", "name_en": "Taiwan, China", "region_zh": "台北", "region_en": "Taipei", "continent": "asia", "price_cny": 56, "price_usd": 8 },
+    { "id": 9, "flag": "🇫🇷", "name_zh": "法国", "name_en": "France", "region_zh": "巴黎", "region_en": "Paris", "continent": "europe", "price_cny": 42, "price_usd": 6 },
+    { "id": 10, "flag": "🇻🇳", "name_zh": "越南", "name_en": "Vietnam", "region_zh": "河内", "region_en": "Hanoi", "continent": "asia", "price_cny": 49, "price_usd": 7 },
+    { "id": 11, "flag": "🇭🇰", "name_zh": "中国香港", "name_en": "Hong Kong, China", "region_zh": "九龙", "region_en": "Kowloon", "continent": "asia", "price_cny": 56, "price_usd": 8 },
+    { "id": 12, "flag": "🇯🇵", "name_zh": "日本", "name_en": "Japan", "region_zh": "东京", "region_en": "Tokyo", "continent": "asia", "price_cny": 56, "price_usd": 8 },
+    { "id": 13, "flag": "🇯🇵", "name_zh": "日本", "name_en": "Japan", "region_zh": "大阪", "region_en": "Osaka", "continent": "asia", "price_cny": 56, "price_usd": 8 },
+    { "id": 14, "flag": "🇪🇸", "name_zh": "西班牙", "name_en": "Spain", "region_zh": "马德里", "region_en": "Madrid", "continent": "europe", "price_cny": 42, "price_usd": 6 },
+    { "id": 15, "flag": "🇰🇷", "name_zh": "韩国", "name_en": "South Korea", "region_zh": "首尔", "region_en": "Seoul", "continent": "asia", "price_cny": 56, "price_usd": 8 },
+    { "id": 16, "flag": "🇨🇦", "name_zh": "加拿大", "name_en": "Canada", "region_zh": "多伦多", "region_en": "Toronto", "continent": "america", "price_cny": 42, "price_usd": 6 },
+    { "id": 17, "flag": "🇦🇺", "name_zh": "澳大利亚", "name_en": "Australia", "region_zh": "悉尼", "region_en": "Sydney", "continent": "oceania", "price_cny": 56, "price_usd": 8 },
+    { "id": 18, "flag": "🇦🇺", "name_zh": "澳大利亚", "name_en": "Australia", "region_zh": "墨尔本", "region_en": "Melbourne", "continent": "oceania", "price_cny": 56, "price_usd": 8 },
+    { "id": 19, "flag": "🇳🇱", "name_zh": "荷兰", "name_en": "Netherlands", "region_zh": "阿姆斯特丹", "region_en": "Amsterdam", "continent": "europe", "price_cny": 42, "price_usd": 6 },
+    { "id": 20, "flag": "🇮🇹", "name_zh": "意大利", "name_en": "Italy", "region_zh": "米兰", "region_en": "Milan", "continent": "europe", "price_cny": 42, "price_usd": 6 },
+    { "id": 21, "flag": "🇲🇾", "name_zh": "马来西亚", "name_en": "Malaysia", "region_zh": "吉隆坡", "region_en": "Kuala Lumpur", "continent": "asia", "price_cny": 49, "price_usd": 7 },
+    { "id": 22, "flag": "🇹🇭", "name_zh": "泰国", "name_en": "Thailand", "region_zh": "曼谷", "region_en": "Bangkok", "continent": "asia", "price_cny": 49, "price_usd": 7 },
+    { "id": 23, "flag": "🇵🇭", "name_zh": "菲律宾", "name_en": "Philippines", "region_zh": "马尼拉", "region_en": "Manila", "continent": "asia", "price_cny": 49, "price_usd": 7 },
+    { "id": 24, "flag": "🇮🇩", "name_zh": "印度尼西亚", "name_en": "Indonesia", "region_zh": "雅加达", "region_en": "Jakarta", "continent": "asia", "price_cny": 49, "price_usd": 7 },
+    { "id": 25, "flag": "🇧🇷", "name_zh": "巴西", "name_en": "Brazil", "region_zh": "圣保罗", "region_en": "Sao Paulo", "continent": "america", "price_cny": 49, "price_usd": 7 },
+    { "id": 26, "flag": "🇲🇽", "name_zh": "墨西哥", "name_en": "Mexico", "region_zh": "墨西哥城", "region_en": "Mexico City", "continent": "america", "price_cny": 49, "price_usd": 7 },
+    { "id": 27, "flag": "🇸🇪", "name_zh": "瑞典", "name_en": "Sweden", "region_zh": "斯德哥尔摩", "region_en": "Stockholm", "continent": "europe", "price_cny": 49, "price_usd": 7 },
+    { "id": 28, "flag": "🇨🇭", "name_zh": "瑞士", "name_en": "Switzerland", "region_zh": "苏黎世", "region_en": "Zurich", "continent": "europe", "price_cny": 56, "price_usd": 8 },
+    { "id": 29, "flag": "🇳🇿", "name_zh": "新西兰", "name_en": "New Zealand", "region_zh": "奥克兰", "region_en": "Auckland", "continent": "oceania", "price_cny": 56, "price_usd": 8 },
+    { "id": 30, "flag": "🇦🇪", "name_zh": "阿联酋", "name_en": "UAE", "region_zh": "迪拜", "region_en": "Dubai", "continent": "asia", "price_cny": 63, "price_usd": 9 }
   ]
 }
